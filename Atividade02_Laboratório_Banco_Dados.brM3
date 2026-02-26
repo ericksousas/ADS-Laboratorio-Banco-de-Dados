@@ -1,0 +1,64 @@
+/* Entidade {atributo 1, atributo 2, ...}*/
+create table fabricante(
+codigo bigint primary key,
+nome varchar(100) not null,
+telefone varchar(30),
+email varchar(100) not null unique,
+responsavel varchar(100)
+);
+
+create table modelo(
+codigoModelo bigint primary key,
+tipo varchar(100) not null,
+PESO decimal(12,4) default(1),
+codigofabricante bigint,
+horaTeste int default(100)
+);
+alter table modelo add foreign key
+(codigofabricante) references
+fabricante(codigo);
+
+create table maquina(
+registro varchar(100) primary key,
+ano char(4),
+horasUso int default(0),
+codigoModelo bigint);
+alter table maquina add foreign key
+(codigoModelo) references 
+modelo(codigoModelo);
+
+create table oficina(
+codigo bigint primary key not null,
+cnpj varchar(14) not null unique,
+nome varchar(100) not null,
+responsavel varchar(100) not null,
+telefone varchar (30),
+email varchar(100) not null unique
+);
+
+create table teste(
+codigo bigint primary key not null,
+pontuacao varchar(100),
+resultado varchar(100),
+recomendacoes varchar(100)
+);
+alter table teste add foreign key
+(codigo) references 
+oficina (codigo); 
+
+create table tecnico(
+codigoFuncional bigint primary key not null,
+endereco varchar (100),
+telefone varchar(100),
+salario decimal(10,2),
+qualificacao varchar (100)
+);
+
+alter table teste add foreign key 
+(codigo) references 
+tecnico(codigoFuncional);
+
+alter table oficina add foreign key
+(codigo) references 
+tecnico (codigoFuncional);
+
